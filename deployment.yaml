@@ -4,29 +4,29 @@
   hosts: 127.0.0.1
   tasks:
 
-    - name: Create a volume
+    - name: Create mysql-server-data volume
       docker_volume:
         name: mysql-server-data
 
-    - name: Create a volume
+    - name: Create grafana-config volume
       docker_volume:
         name: grafana-config
 
-    - name: Create a volume
+    - name: Create grafana-storage volume
       docker_volume:
         name: grafana-storage
 
-    - name: Create a network
+    - name: Create mysql-net network
       docker_network:
         name: mysql-net
         attachable: yes
 
-    - name: Create a network
+    - name: Create zabbix-net network
       docker_network:
         name: zabbix-net
         attachable: yes
 
-    - name: Create a network
+    - name: Create grafana-net network
       docker_network:
         name: grafana-net
         attachable: yes
