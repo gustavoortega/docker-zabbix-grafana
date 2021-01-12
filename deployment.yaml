@@ -1,5 +1,5 @@
 
-- name: Network Getting Started First Playbook Extended
+- name: Playbook for installing Monitoring software (mysql-server + zabbix + grafana)
   gather_facts: false
   hosts: 127.0.0.1
   tasks:
@@ -52,9 +52,9 @@
     - name: Attach mysql-server container to zabbix network
       docker_network:
         name: zabbix-net
-      connected:
-        - mysql-server
-      appends: yes
+        connected:
+          - mysql-server
+        appends: yes
       
       
     - name: Creating ZABBIX-SERVER container
@@ -123,12 +123,13 @@
       docker_network:
         name: zabbix-net
         connected:
-        - grafana
+          - grafana
         appends: yes
 
     - name: Installing grafana plugin for zabbix
       command: docker exec -ti grafana grafana-cli plugins install alexanderzobnin-zabbix-app
       register: output
 
-    - debug:
-      msg: "El plugin de zabbix para Grafana: {{ output.rc }}"
+    - name: Result code for installing grafana plugin for zabbix
+      debug:
+        msg: "El plugin de zabbix para Grafana: {{ output.rc }}"
