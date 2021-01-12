@@ -1,11 +1,11 @@
 - hosts: 127.0.0.1
-  become: yes
+	become: yes
 
   vars:
     my_package_name: "https://repo.zabbix.com/zabbix/5.2/debian/pool/main/z/zabbix-release/zabbix-release_5.2-1+debian10_all.deb"
     dstPath: "/tmp/zabbix-release_5.2-1+debian10_all.deb"
 
-  tasks:
+	tasks:
 	- name: Create a volume
 	  docker_volume:
 		name: mysql-server-data
@@ -33,8 +33,6 @@
 	  docker_network:
 		name: grafana-net
 		attachable: yes
-
-	  
 		  
 	- name: Creating MYSQL-SERVER container
 	  docker_container:
