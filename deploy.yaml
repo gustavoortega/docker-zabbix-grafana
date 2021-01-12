@@ -1,0 +1,77 @@
+- hosts: 127.0.0.1
+  become: yes
+
+  tasks:
+	- name: Create a volume
+	  docker_volume:
+		name: mysql-server-data
+
+	- name: Create a volume
+	  docker_volume:
+		name: grafana-config
+
+	- name: Create a volume
+	  docker_volume:
+		name: grafana-storage
+
+
+	- name: Create a network
+	  docker_network:
+		name: mysql-net
+		attachable: yes
+		
+	- name: Create a network
+	  docker_network:
+		name: zabbix-net
+		attachable: yes
+
+	- name: Create a network
+	  docker_network:
+		name: grafana-net
+		attachable: yes
+
+	  
+		  
+	- name: Creating MYSQL-SERVER container
+	  docker_container:
+		name: mysql-server
+		state: started
+		image: mysql:8.0
+		volumes:
+		 - "mysql-server-data:/var/lib/mysql:rw"
+		command: --character-set-server=utf8 --collation-server=utf8_bin       --default-authentication-plugin=mysql_native_password
+		restart_policy: unless-stopped
+		networks:
+			- name: mysql-net
+		env:
+			MYSQL_DATABASE: "zabbix"
+			MYSQL_USER: "zabbix"
+			MYSQL_PASSWORD: "zabbix_pwd"
+			MYSQL_ROOT_PASSWORD: "root_pwd"
+
+	- name: Attach mysql-server container to zabbix network
+	  docker_network:
+		name: zabbix-net
+		connected:
+		  - mysql-server
+		appends: yes	  
+		
+	- name: Creating ZABBIX-SERVER container
+	  docker_container:
+		name: zabbix-server
+		state: started
+		image: zabbix/zabbix-server-mysql:latest
+		networks:
+			- name: zabbix-net
+		links:
+			- "mysql-server:mysql"
+		volumes:
+		 - "mysql-server-data:/var/lib/mysql:rw"
+		ports:
+		 - "10051:10051"
+		restart_policy: unless-stopped
+		env:
+			MYSQL_DATABASE: "zabbix"
+			MYSQL_USER: "zabbix"
+			MYSQL_PASSWORD: "zabbix_pwd"
+			DB_SERVER_HOST: "mysql-server"
