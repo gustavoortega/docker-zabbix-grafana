@@ -1,18 +1,16 @@
-- hosts: 127.0.0.1
-	become: yes
 
-  vars:
-    my_package_name: "https://repo.zabbix.com/zabbix/5.2/debian/pool/main/z/zabbix-release/zabbix-release_5.2-1+debian10_all.deb"
-    dstPath: "/tmp/zabbix-release_5.2-1+debian10_all.deb"
+- name: Network Getting Started First Playbook Extended
+  gather_facts: false
+  hosts: 127.0.0.1
+  tasks:
 
-	tasks:
-	- name: Create a volume
-	  docker_volume:
-		name: mysql-server-data
+    - name: Create a volume
+      docker_volume:
+        name: mysql-server-data
 
-	- name: Create a volume
-	  docker_volume:
-		name: grafana-config
+    - name: Create a volume
+      docker_volume:
+        name: grafana-config
 
 	- name: Create a volume
 	  docker_volume:
