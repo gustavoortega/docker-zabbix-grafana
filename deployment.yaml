@@ -62,6 +62,7 @@
         purge_networks: yes
         networks:
         - name: mysql-net
+        user: mysql
         env:
           MYSQL_DATABASE: "zabbix"
           MYSQL_USER: "zabbix"
