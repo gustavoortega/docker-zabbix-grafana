@@ -1,9 +1,18 @@
 
 - name: Playbook for installing Monitoring software (mysql-server + zabbix + grafana)
-  gather_facts: false
+  gather_facts: true
   hosts: 127.0.0.1
   become: yes
   tasks:
+
+    - name: Install software for monitoring server
+      dnf:
+        name: 
+          - docker
+          - vim
+          - python-pip
+        state: present
+      when: ansible_facts['os_family'] == 'RedHat' and ansible_facts ['distribution_major_version'] >= '8'
 
     - name: Install software for monitoring server
       yum:
@@ -12,6 +21,7 @@
           - vim
           - python-pip
         state: present
+      when: ansible_facts['os_family'] == 'RedHat' and ansible_facts ['distribution_major_version'] == '7'
 
     - name: Configuring docker service
       service:

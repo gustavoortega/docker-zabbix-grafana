@@ -16,6 +16,7 @@ docker run --name mysql-server -t \
       -e MYSQL_USER="zabbix" \
       -e MYSQL_PASSWORD="zabbix_pwd" \
       -e MYSQL_ROOT_PASSWORD="root_pwd" \
+      -u mysql \
 	  --network mysql-net \
 	  -v mysql-server-data:/var/lib/mysql \
       --restart unless-stopped \
