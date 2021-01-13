@@ -4,6 +4,38 @@
   hosts: 127.0.0.1
   tasks:
 
+    - name: Enable EPEL Repository on CentOS 8
+      dnf:
+        name: epel-release
+        state: latest
+      become: True
+      when: ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] == '8'
+
+    - name: Enable EPEL Repository on CentOS 7
+      yum:
+        name: epel-release
+        state: latest
+        become: True
+      when: ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] == '7'
+
+    - name: Install software for monitoring server
+      yum:
+        name: 
+          - docker
+          - vim
+          - python-pip
+        state: present
+
+    - name: Configuring docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install pip libraries dependencies 
+      pip:
+        name: docker
+
     - name: Create mysql-server-data volume
       docker_volume:
         name: mysql-server-data
@@ -126,10 +158,18 @@
           - grafana
         appends: yes
 
-    - name: Installing grafana plugin for zabbix
-      command: docker exec -ti grafana grafana-cli plugins install alexanderzobnin-zabbix-app
-      register: output
+    - name: Check if grafana plugin for zabbix was installed
+      #command: docker exec grafana grafana-cli plugins install alexanderzobnin-zabbix-app
+      command: docker exec grafana grafana-cli plugins ls | grep alexanderzobnin-zabbix-app
+      register: plugininstalled
 
-    - name: Result code for installing grafana plugin for zabbix
-      debug:
-        msg: "El plugin de zabbix para Grafana: {{ output.rc }}"
+    - name: Installing grafana plugin for zabbix
+      command: docker exec grafana grafana-cli plugins install alexanderzobnin-zabbix-app
+      #command: docker exec grafana grafana-cli plugins ls | grep alexanderzobnin-zabbix-app
+      when: plugininstalled.rc != 0
+      notify:
+      - restart grafana container
+
+  handlers:
+    - name: restart grafana container
+      command: docker restart grafana
