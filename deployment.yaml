@@ -4,20 +4,6 @@
   hosts: 127.0.0.1
   tasks:
 
-    - name: Enable EPEL Repository on CentOS 8
-      dnf:
-        name: epel-release
-        state: latest
-      become: True
-      when: ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] == '8'
-
-    - name: Enable EPEL Repository on CentOS 7
-      yum:
-        name: epel-release
-        state: latest
-        become: True
-      when: ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] == '7'
-
     - name: Install software for monitoring server
       yum:
         name: 
@@ -87,8 +73,7 @@
         connected:
           - mysql-server
         appends: yes
-      
-      
+            
     - name: Creating ZABBIX-SERVER container
       docker_container:
         name: zabbix-server
