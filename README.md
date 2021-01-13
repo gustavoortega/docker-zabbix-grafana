@@ -1,7 +1,7 @@
 # docker-zabbix-grafana
 
 Para CENTOS:
-# sudo yum update -y
+\# sudo yum update -y
 # sudo yum install epel-release -y
 # sudo yum install git ansible docker vim python-pip -y
 # sudo pip install docker
