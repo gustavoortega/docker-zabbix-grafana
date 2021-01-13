@@ -2,6 +2,7 @@
 - name: Playbook for installing Monitoring software (mysql-server + zabbix + grafana)
   gather_facts: false
   hosts: 127.0.0.1
+  become: yes
   tasks:
 
     - name: Install software for monitoring server
@@ -145,13 +146,14 @@
 
     - name: Check if grafana plugin for zabbix was installed
       #command: docker exec grafana grafana-cli plugins install alexanderzobnin-zabbix-app
-      command: docker exec grafana grafana-cli plugins ls | grep alexanderzobnin-zabbix-app
+      shell: docker exec grafana grafana-cli plugins ls | grep alexanderzobnin-zabbix-app
       register: plugininstalled
+      ignore_errors: yes
 
     - name: Installing grafana plugin for zabbix
       command: docker exec grafana grafana-cli plugins install alexanderzobnin-zabbix-app
       #command: docker exec grafana grafana-cli plugins ls | grep alexanderzobnin-zabbix-app
-      when: plugininstalled.rc != 0
+      when: plugininstalled.rc > 0
       notify:
       - restart grafana container
 
