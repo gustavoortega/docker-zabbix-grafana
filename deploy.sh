@@ -35,6 +35,7 @@ docker run --name zabbix-server -t \
       -e MYSQL_PASSWORD="zabbix_pwd" \
       -e ZBX_CACHESIZE=256M \
       -e ZBX_STARTVMWARECOLLECTORS=2 \
+      -e ZBX_TIMEOUT=20 \
       --network zabbix-net \
       --link mysql-server:mysql \
       -p 10051:10051 \
