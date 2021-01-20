@@ -99,6 +99,7 @@
           DB_SERVER_HOST: "mysql-server"
           ZBX_CACHESIZE: "256M"
           ZBX_STARTVMWARECOLLECTORS: "2" 
+          ZBX_TIMEOUT: "20"
           
 
     - name: Creating ZABBIX-WEB container
