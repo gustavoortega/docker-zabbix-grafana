@@ -97,6 +97,9 @@
           MYSQL_USER: "zabbix"
           MYSQL_PASSWORD: "zabbix_pwd"
           DB_SERVER_HOST: "mysql-server"
+          ZBX_CACHESIZE: "256M"
+          ZBX_STARTVMWARECOLLECTORS: "2" 
+          
 
     - name: Creating ZABBIX-WEB container
       docker_container:
