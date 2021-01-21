@@ -48,6 +48,7 @@ docker run --name zabbix-web -t \
       -e MYSQL_DATABASE="zabbix" \
       -e MYSQL_USER="zabbix" \
       -e MYSQL_PASSWORD="zabbix_pwd" \
+      -e PHP_TZ="America/Argentina/Buenos_Aires" \
       --network zabbix-net \
       --link mysql-server:mysql \
       --link zabbix-server:zabbix-server \
