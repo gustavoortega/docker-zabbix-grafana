@@ -123,6 +123,7 @@
           MYSQL_USER: "zabbix"
           MYSQL_PASSWORD: "zabbix_pwd"
           DB_SERVER_HOST: "mysql-server"
+          PHP_TZ: "America/Argentina/Buenos_Aires"
 
     - name: Creating GRAFANA container
       docker_container:
