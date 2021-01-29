@@ -96,7 +96,10 @@ resource "docker_container" "zabbix-server" {
   "MYSQL_DATABASE=${var.mysql_zabbix_database}",
   "MYSQL_USER=${var.mysql_zabbix_username}",
   "MYSQL_PASSWORD=${random_password.mysql_zabbix_pw.result}",
-  "DB_SERVER_HOST=${var.container_mysql_name}"
+  "DB_SERVER_HOST=${var.container_mysql_name}",
+  "ZBX_CACHESIZE=256M",
+  "ZBX_STARTVMWARECOLLECTORS=2",
+  "ZBX_TIMEOUT=20"
   ]
 
   start = true
@@ -120,7 +123,8 @@ resource "docker_container" "zabbix-web" {
   "MYSQL_DATABASE=${var.mysql_zabbix_database}",
   "MYSQL_USER=${var.mysql_zabbix_username}",
   "MYSQL_PASSWORD=${random_password.mysql_zabbix_pw.result}",
-  "DB_SERVER_HOST=${var.container_mysql_name}"
+  "DB_SERVER_HOST=${var.container_mysql_name}",
+  "PHP_TZ=sAmerica/Argentina/Buenos_Aires"
   ]
 
   start = true
