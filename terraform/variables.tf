@@ -1,3 +1,14 @@
+variable "container_grafana_port" {
+  description = "Tcp Port for for grafana container"
+  type        = number
+  default     = "3000"
+}
+
+variable "container_zabbix_port" {
+  description = "Tcp Port for for Zabbix container"
+  type        = number
+  default     = "80"
+}
 variable "container_mysql_name" {
   description = "Name for mysql container"
   type        = string

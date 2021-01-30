@@ -115,7 +115,7 @@ resource "docker_container" "zabbix-web" {
   }
   ports {
       internal = 8080
-      external = 80
+      external = var.container_zabbix_port
   }
   links = ["${var.container_mysql_name}:mysql", "${var.container_zabbix_name}-server:zabbix-server"]
   restart = "unless-stopped"
@@ -143,7 +143,7 @@ resource "docker_container" "grafana" {
   }
   ports {
       internal = 3000
-      external = 3000
+      external = var.container_grafana_port
   }
   
   restart = "unless-stopped"
