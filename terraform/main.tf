@@ -124,7 +124,7 @@ resource "docker_container" "zabbix-web" {
   "MYSQL_USER=${var.mysql_zabbix_username}",
   "MYSQL_PASSWORD=${random_password.mysql_zabbix_pw.result}",
   "DB_SERVER_HOST=${var.container_mysql_name}",
-  "PHP_TZ=sAmerica/Argentina/Buenos_Aires"
+  "PHP_TZ=America/Argentina/Buenos_Aires"
   ]
 
   start = true
