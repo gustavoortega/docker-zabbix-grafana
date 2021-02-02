@@ -14,4 +14,4 @@ or short version (for copy/paste):<BR>
 Zabbix is running on port 80 and grafana on port 3000<BR>
 All settings are factory default.<BR>
 <BR><BR>
-Enjoy it!
+Enjoy it!!
