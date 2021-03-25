@@ -61,7 +61,7 @@ docker run --name zabbix-web -t \
 
 echo "Creating GRAFANA container"	  
 docker run \
---name grafana -d --hostname grafana.ccelmoro.com.ar \
+--name grafana -d --hostname grafana.gustavoortega.com.ar \
 -v grafana-config:/etc/grafana \
 -v grafana-storage:/var/lib/grafana/ \
 -p 3000:3000 \
